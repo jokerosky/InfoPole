@@ -1,0 +1,17 @@
+<div> Files</div>
+
+
+<form #filesForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile" (change)="filesChanged($event)" multiple>
+            <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
+    </div>
+    <ul class='list-group'>
+        <li  class="list-group-item" *ngFor="let file of files">{{file.name}}</li>
+    </ul>
+    <p></p>
+    <button type="submit" class="btn btn-primary">Send Files</button>
+
+</form>
