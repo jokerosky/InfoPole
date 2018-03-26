@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -12,11 +13,25 @@ namespace InfoPole.Controllers
     public class FilesController : Controller
     {
         [HttpPost]
-        public IActionResult Post(string seoName)
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> Post(List<IFormFile> files)
         {
-            var result = "no problem";
+            long size = files.Sum(f => f.Length);
+            var filePath = Path.GetTempFileName();
 
-            return Json(result);
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    }
+                }
+            }
+
+
+            return Ok(new { count = files.Count, size, filePath });
         }
 
     }

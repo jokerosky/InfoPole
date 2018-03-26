@@ -1,0 +1,14 @@
+<h1>Upload SE Dump Files </h1>
+
+<form #filesForm='ngForm'  (ngSubmit)="formSubmit()" >
+    <input class='btn btn-default' type="file" (change)="selectFiles($event)" multiple>
+    
+    <h4>Files for upload</h4>
+    
+    <ul class='list-group'>
+        <li class='list-group-item' *ngFor="let file of files">{{file.name}}</li>
+        <li class='list-group-item' *ngIf="files.length == 0">No files selected</li>
+    </ul>
+
+    <button type="submit" class="btn btn-success" [disabled]="!filesForm.form.valid">Submit</button>
+</form>

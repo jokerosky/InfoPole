@@ -17,5 +17,6 @@ namespace InfoPole.Data
         public DbSet<UrlItem> UrlItems { get; set; }
         public DbSet<UrlKey> UrlKeys { get; set; }
         public DbSet<KeyTag> KeyTags { get; set; }
+        public DbSet<DataFile> DataFiles { get; set; }
     }
 }
