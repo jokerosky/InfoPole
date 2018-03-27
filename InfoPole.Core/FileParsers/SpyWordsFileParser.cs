@@ -13,13 +13,13 @@ namespace InfoPole.Core.FileParsers
             var columns = headers.Split(';');
 
             var captions = new string[] {
-                "\"Запрос\"",
-                "\"Доля трафика %\"",
-                "\"Показов в месяц\"",
-                "\"Позиция\"",
-                "\"Изменение позиции\"",
-                "\"Сниппет и URL\"",
-                "\"Реальный URL\"",
+                "\"Запрос\"", //0
+                "\"Доля трафика %\"", //1
+                "\"Показов в месяц\"", //2
+                "\"Позиция\"", //3
+                "\"Изменение позиции\"", //4
+                "\"Сниппет и URL\"", //5
+                "\"Реальный URL\"", //6
                 "" // because of last ;
             };
             var result = true;
@@ -31,9 +31,20 @@ namespace InfoPole.Core.FileParsers
             return result;
         }
 
-        public KeyItem ParseString(string line)
+        public ParseItem ParseString(string line, int searcherId)
         {
-            throw new NotImplementedException();
+            var values = line.Split(';');
+
+            var keyItem = new ParseItem()
+            {
+                Key = values[1],
+                Url = values[2],
+                Position = int.Parse(values[3].Replace(" ", "")),
+                ShowingsNumber = int.Parse(values[5].Replace(" ", "")),
+                SearchEngineId = searcherId
+            };
+
+            return keyItem;
         }
     }
 }

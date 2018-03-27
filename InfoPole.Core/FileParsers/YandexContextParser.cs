@@ -13,7 +13,7 @@ namespace InfoPole.Core.FileParsers
             throw new NotImplementedException();
         }
 
-        public KeyItem ParseString(string line)
+        public ParseItem ParseString(string line, int searcherId)
         {
             throw new NotImplementedException();
         }

@@ -9,6 +9,6 @@ namespace InfoPole.Core
     public  interface IFileParser
     {
         bool IsCompatibleFormat(string headers);
-        KeyItem ParseString(string line);
+        ParseItem ParseString(string line, int searcherId);
   }
 }

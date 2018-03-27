@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace InfoPole.Core.FileParsers
@@ -13,13 +11,13 @@ namespace InfoPole.Core.FileParsers
             var columns = headers.Split(';');
 
             var captions = new string[] { 
-                "page id",
-                "Запрос",
-                "Страница",
-                "Позиция",
-                "Базовая частотность",
-                "Очень точная частотность",
-                "Документов найдено"
+                "page id", //0
+                "Запрос", //1
+                "Страница", //2
+                "Позиция", //3
+                "Базовая частотность", //4
+                "Очень точная частотность", //5
+                "Документов найдено" //6
             };
             var result = true;
             foreach (var column in columns)
@@ -30,9 +28,20 @@ namespace InfoPole.Core.FileParsers
             return result;
         }
 
-        public KeyItem ParseString(string line)
+        public ParseItem ParseString(string line, int searcherId)
         {
-            throw new NotImplementedException();
+            var values = line.Split(';');
+            
+            var keyItem = new ParseItem()
+                {
+                    Key = values[1],
+                    Url = values[2],
+                    Position = int.Parse(values[3].Replace(" ", "")),
+                    ShowingsNumber = int.Parse(values[5].Replace(" ", "")),
+                    SearchEngineId = searcherId
+                };
+
+            return keyItem;
         }
     }
 }

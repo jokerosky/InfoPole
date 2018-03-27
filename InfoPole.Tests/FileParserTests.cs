@@ -32,7 +32,17 @@ namespace InfoPole.Tests
         {
             var keysSoParser = new KeysSoFileParser();
             var line = TestData.FileDataLines.GetKeysSoDataLine();
-            var keyItem = keysSoParser.ParseString(line);
+            var keyItem = keysSoParser.ParseString(line, 0);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(keyItem.Key));
+        }
+
+        [Test]
+        public void SpyWordsParser_should_parse_data_line()
+        {
+            var spyWordsParser = new SpyWordsFileParser();
+            var line = TestData.FileDataLines.GetSpyWordsDataLine();
+            var keyItem = spyWordsParser.ParseString(line, 0);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(keyItem.Key));
         }

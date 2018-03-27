@@ -39,7 +39,7 @@ export class FilesComponent {
         }
         //this.files.forEach(f => { formData.append('fileItem', f, f.name); })
         
-        return this.http.post(
+        this.http.post(
                 apiEndpoint,
                 formData
             ).subscribe((resp:HttpResponse<any>)=>{
