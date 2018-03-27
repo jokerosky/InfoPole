@@ -6,11 +6,28 @@ using System.Threading.Tasks;
 
 namespace InfoPole.Core.FileParsers
 {
-    class KeysSoFileParser : IFileParser
+    public class KeysSoFileParser : IFileParser
     {
-        public IFileParser DetectFormat(string headers)
+        public bool IsCompatibleFormat(string headers)
         {
-            throw new NotImplementedException();
+            var columns = headers.Split(';');
+
+            var captions = new string[] { 
+                "page id",
+                "Запрос",
+                "Страница",
+                "Позиция",
+                "Базовая частотность",
+                "Очень точная частотность",
+                "Документов найдено"
+            };
+            var result = true;
+            foreach (var column in columns)
+            {
+                result &= captions.Contains(column.Trim());
+            }
+
+            return result;
         }
 
         public KeyItem ParseString(string line)

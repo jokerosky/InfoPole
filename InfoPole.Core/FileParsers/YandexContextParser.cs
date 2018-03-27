@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace InfoPole.Core.FileParsers
 {
-    class YandexContextParser : IFileParser
+    public class YandexContextParser : IFileParser
     {
-        public bool DetectFormat(string headers)
+        public bool IsCompatibleFormat(string headers)
         {
             throw new NotImplementedException();
         }

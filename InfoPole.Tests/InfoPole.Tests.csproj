@@ -49,6 +49,8 @@
     <Compile Include="FileParserTests.cs" />
     <Compile Include="FileProcessingServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestData\FileDataLines.cs" />
+    <Compile Include="TestData\FileHeaders.cs" />
     <Compile Include="TestData\FileNames.cs" />
   </ItemGroup>
   <ItemGroup>

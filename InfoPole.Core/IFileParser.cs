@@ -8,7 +8,7 @@ namespace InfoPole.Core
 {
     public  interface IFileParser
     {
-        bool DetectFormat(string headers);
+        bool IsCompatibleFormat(string headers);
         KeyItem ParseString(string line);
   }
 }

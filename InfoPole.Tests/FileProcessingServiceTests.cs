@@ -11,6 +11,7 @@ namespace InfoPole.Tests
         public void Should_process_csv_file()
         {
             var path = @"C:\dev\test\rivegauche.ru_G_spyw.csv";
+            //var path = @"C:\dev\test\rivegauche.ru.organic_Y.keys.csv";
 
             var fpSvc = new FileProcessingService();
 
