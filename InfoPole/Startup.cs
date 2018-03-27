@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InfoPole
@@ -15,7 +16,17 @@ namespace InfoPole
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddMvcCore();
+      services.AddMvcCore()
+          .AddJsonFormatters();
+
+      services.Configure<FormOptions>(x =>
+      {
+        x.ValueLengthLimit = int.MaxValue;
+        x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
+      });
+
+      services.AddRouting();
+      services.AddCors();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -27,9 +38,18 @@ namespace InfoPole
       }
 
       app.UseStaticFiles();
-      app.UseMvc(opt =>
+      app.UseCors(builder =>
       {
-  
+        builder
+          .AllowAnyOrigin()
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+      });
+      app.UseMvc(routes =>
+      {
+        routes.MapRoute(
+          name: "default",
+          template: "{controller=Main}/{action=Get}");
       });
 
     }
