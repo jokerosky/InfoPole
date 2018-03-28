@@ -12,6 +12,11 @@ namespace InfoPole.Tests.Mocks
 {
     class MockItemSaver : IItemsSaver
     {
+        public T SaveItem<T>(T item) where T : class
+        {
+            return item;
+        }
+
         public SearchKey SaveKey(SearchKey key)
         {
             return key;
@@ -25,6 +30,11 @@ namespace InfoPole.Tests.Mocks
         public UrlKey SaveUrlKey(UrlKey urlKey)
         {
             return urlKey;
+        }
+
+        public SearchKeyFrequency SaveSearchKeyFrequency(SearchKeyFrequency keyFrequency)
+        {
+            return keyFrequency;
         }
     }
 }

@@ -19,9 +19,7 @@ namespace InfoPole.Tests
             //var path = @"C:\dev\test\rivegauche.ru.organic_Y.keys.csv";
 
             var fpSvc = new FileProcessingService(
-                new List<SearchKey>(),
-                new List<UrlItem>(),
-                new List<UrlKey>(), 
+                new MockServerCacheService(), 
                 new MockItemSaver()
                 );
 

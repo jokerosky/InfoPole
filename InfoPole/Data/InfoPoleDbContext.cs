@@ -15,6 +15,7 @@ namespace InfoPole.Data
 
     public DbSet<SearchKey> SearchKeys{ get; set; }
     public DbSet<SearchEngine> SearchEngines { get; set; }
+    public DbSet<SearchKeyFrequency> SearchKeyFrequencies { get; set; }
     public DbSet<MarkupTag> MarkupTags { get; set; }
     public DbSet<Tag> Tags { get; set; }
     public DbSet<UrlItem> UrlItems { get; set; }

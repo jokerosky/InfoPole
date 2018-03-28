@@ -4,18 +4,28 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import {MatSelectModule} from '@angular/material/select';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material/input';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home.cmpnt';
 import { FilesComponent } from './components/files.cmpnt';
+import { MakrUpTagsComponent } from './components/markupTags';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    FilesComponent
+    FilesComponent,
+    MakrUpTagsComponent
   ],
   imports: [
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatSelectModule,
+
     FormsModule,
     HttpClientModule,
     BrowserModule,
@@ -23,6 +33,7 @@ import { FilesComponent } from './components/files.cmpnt';
       { path: '', redirectTo: 'files', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'files', component: FilesComponent },
+      { path: 'markuptags', component: MakrUpTagsComponent },
       { path: '**', redirectTo: 'home' }
   ])
   ],

@@ -10,8 +10,11 @@ namespace InfoPole.Core.Services
 {
     public interface IItemsSaver
     {
+        T SaveItem<T>(T item) where T : class;
+
         SearchKey SaveKey(SearchKey key);
         UrlItem SaveUrl(UrlItem url);
         UrlKey SaveUrlKey(UrlKey urlKey);
+        SearchKeyFrequency SaveSearchKeyFrequency(SearchKeyFrequency keyFrequency);
     }
 }

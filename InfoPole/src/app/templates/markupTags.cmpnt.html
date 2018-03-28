@@ -1,0 +1,25 @@
+<div>Markup tags</div>
+<h3>Select .csv with tags for markup </h3>
+<form #filesForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile" (change)="filesChanged($event)">
+            <label class="custom-file-label" for="customFile">{{file?.name || "Chose file"}}</label>
+        </div>
+    </div>
+    <p></p>
+    <button type="submit" class="btn btn-primary">Upload</button>
+    <button type="reset" (click)="clearFiles()" class="btn btn-primary">Clear</button>
+</form>
+<p></p>
+<div class="col">
+
+
+    <mat-form-field>
+        <mat-select placeholder="Markup Tags">
+            <mat-option *ngFor="let tag of markupTags" [value]="tag">
+                {{ tag }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

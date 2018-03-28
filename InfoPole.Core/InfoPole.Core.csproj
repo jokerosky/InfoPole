@@ -47,14 +47,19 @@
     <Compile Include="Entities\MarkupTag.cs" />
     <Compile Include="Entities\SearchEngine.cs" />
     <Compile Include="Entities\SearchKey.cs" />
+    <Compile Include="Entities\SearchKeyFrequency.cs" />
     <Compile Include="Entities\Tag.cs" />
     <Compile Include="Entities\UrlItem.cs" />
     <Compile Include="FileParsers\KeysSoFileParser.cs" />
     <Compile Include="FileParsers\SpyWordsFileParser.cs" />
     <Compile Include="FileParsers\YandexContextParser.cs" />
-    <Compile Include="IFileParser.cs" />
+    <Compile Include="Services\IFileParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IItemsSaver.cs" />
+    <Compile Include="Services\IMarkupTagsFileParser.cs" />
+    <Compile Include="Services\IServerCacheService.cs" />
+    <Compile Include="Services\ITagsMatcherService.cs" />
+    <Compile Include="Utilities\WordCleaner.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

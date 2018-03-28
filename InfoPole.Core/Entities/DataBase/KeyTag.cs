@@ -8,6 +8,6 @@ namespace InfoPole.Core.DataBase
     {
         public long Id { get; set; }
         public long KeyId { get; set; }
-        public int TagId { get; set; }
+        public int MarkupTagId { get; set; }
     }
 }
