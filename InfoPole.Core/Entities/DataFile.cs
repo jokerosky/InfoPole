@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using InfoPole.Core.Entities.Interfaces;
 
-namespace InfoPole.Core
+namespace InfoPole.Core.Entities
 {
-    public class DataFile
+    public class DataFile: IIdentifiable
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public DateTime Uploaded { get; set; }
-        public int SearchEngineID { get; set; }
+        public long SearchEngineId { get; set; }
     }
 }

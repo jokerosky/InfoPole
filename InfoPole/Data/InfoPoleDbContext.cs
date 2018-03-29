@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InfoPole.Core;
-using InfoPole.Core.DataBase;
 using InfoPole.Core.Entities;
+using InfoPole.Core.Entities.DataBase;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfoPole.Data

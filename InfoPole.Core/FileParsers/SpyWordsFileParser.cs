@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InfoPole.Core.Entities;
 using InfoPole.Core.Services;
 
 namespace InfoPole.Core.FileParsers

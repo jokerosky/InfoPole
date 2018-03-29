@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using InfoPole.Core.Entities.Interfaces;
 
-namespace InfoPole.Core.DataBase
+namespace InfoPole.Core.Entities.DataBase
 {
-    public class KeyTag
+    public class KeyTag : IIdentifiable
     {
         public long Id { get; set; }
         public long KeyId { get; set; }
-        public int MarkupTagId { get; set; }
+        public long MarkupTagId { get; set; }
     }
 }

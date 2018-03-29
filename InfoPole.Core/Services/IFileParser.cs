@@ -1,4 +1,6 @@
-﻿namespace InfoPole.Core.Services
+﻿using InfoPole.Core.Entities;
+
+namespace InfoPole.Core.Services
 {
     public  interface IFileParser
     {

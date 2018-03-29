@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InfoPole.Core;
-using InfoPole.Core.DataBase;
 using InfoPole.Core.Entities;
+using InfoPole.Core.Entities.DataBase;
+using InfoPole.Core.Entities.Interfaces;
 using InfoPole.Core.Services;
 using InfoPole.Data;
 
@@ -18,7 +19,7 @@ namespace InfoPole.Services
         _ctx = ctx;
       }
 
-      public T SaveItem<T>(T item) where T : class
+      public T SaveItem<T>(T item) where T : class , IIdentifiable
       {
         var table = _ctx.Set<T>();
         if (table == null)

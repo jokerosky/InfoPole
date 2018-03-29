@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="FileParserTests.cs" />
     <Compile Include="FileProcessingServiceTests.cs" />
+    <Compile Include="MarkupTagsParserTests.cs" />
     <Compile Include="Mocks\MockItemSaver.cs" />
     <Compile Include="Mocks\MockServerCacheService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

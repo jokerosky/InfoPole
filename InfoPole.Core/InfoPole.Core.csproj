@@ -43,6 +43,7 @@
     <Compile Include="Entities\DataBase\KeyTag.cs" />
     <Compile Include="Entities\DataBase\UrlKey.cs" />
     <Compile Include="Entities\DataFile.cs" />
+    <Compile Include="Entities\Interfaces\IIdentifiable.cs" />
     <Compile Include="Entities\ParseItem.cs" />
     <Compile Include="Entities\MarkupTag.cs" />
     <Compile Include="Entities\SearchEngine.cs" />

@@ -18,11 +18,11 @@ namespace InfoPole.Services
             if(_listsCache == null) _listsCache = new Dictionary<Type, IEnumerable<object>>();
         }
 
-        public IEnumerable<T> GetList<T>() where T :  class
+        public IList<T> GetList<T>() where T :  class
         {
             if (_listsCache.ContainsKey(typeof(T)))
             {
-                return _listsCache[typeof(T)] as IEnumerable<T>;
+                return _listsCache[typeof(T)] as IList<T>;
             }
             else
             {

@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InfoPole.Core.DataBase;
 using InfoPole.Core.Entities;
+using InfoPole.Core.Entities.DataBase;
 using InfoPole.Core.FileParsers;
 using InfoPole.Core.Services;
 using InfoPole.Core.Utilities;
@@ -17,14 +17,17 @@ namespace InfoPole.Services
     {
         readonly Encoding win1251 = Encoding.GetEncoding("windows-1251");
 
-        private IEnumerable<SearchKey> _searchKeys;
-        private IEnumerable<SearchKeyFrequency> _searchKeyFrequencies;
-        private IEnumerable<UrlItem> _urls;
-        private IEnumerable<UrlKey> _urlKeys;
+        private IList<SearchKey> _searchKeys;
+        private IList<SearchKeyFrequency> _searchKeyFrequencies;
+        private IList<UrlItem> _urls;
+        private IList<UrlKey> _urlKeys;
+        private IList<MarkupTag> _markupTags;
+        private IList<Tag> _tags;
+
         private IItemsSaver _itemSaver;
 
         public FileProcessingService(
-        IServerCacheService serverCache,                                                                            
+        IServerCacheService serverCache,
         IItemsSaver itemSaver
     )
         {
@@ -32,32 +35,39 @@ namespace InfoPole.Services
             _searchKeyFrequencies = serverCache.GetList<SearchKeyFrequency>();  //searchKeyFrequencies;
             _urls = serverCache.GetList<UrlItem>(); // urls;
             _urlKeys = serverCache.GetList<UrlKey>(); //urlKeys;
+            _markupTags = serverCache.GetList<MarkupTag>();
+            _tags = serverCache.GetList<Tag>();
+
             _itemSaver = itemSaver;
         }
 
-        public bool ProcessMarkupTagsFile(string path)
+        public int ProcessMarkupTagsFile(string path)
         {
+            var count = 0;
             using (var reader = new StreamReader(path, win1251))
             {
+                var parser = new MarkupTagsFileParser();
+                var errors = new List<string>();
+
                 var headers = reader.ReadLine();
-                var parser = DetectReportParserByHeaders(headers);
-                if (parser == null) throw new Exception("No parser for given file format");
+                var parsedMarkupTags = parser.GetAndSaveMarkupTagsFromHeader(headers, _markupTags, _itemSaver);
 
                 while (!reader.EndOfStream)
                 {
-                    var errors = new List<string>();
+                    count++;
                     var line = reader.ReadLine();
 
                     try
                     {
+                        var tags = parser.GetAndSaveTagsFromLine(line, parsedMarkupTags, _tags, _itemSaver);
                     }
                     catch (Exception exp)
                     {
-
+                        errors.Add(exp.Message);
                     }
                 }
 
-                return true;
+                return count;
             }
         }
 

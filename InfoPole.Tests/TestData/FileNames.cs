@@ -8,7 +8,7 @@ namespace InfoPole.Tests.TestData
 {
     class TessFilesPaths
     {
-        public IEnumerable<string> GetPaths()
+        public static IEnumerable<string> GetPaths()
         {
             return new string[]
             {
@@ -17,6 +17,11 @@ namespace InfoPole.Tests.TestData
                 @"C:\dev\test\rivegauche.ru_G_spyw.csv",
                 @"C:\dev\test\rivegauche.ru_Y_spyw.csv"
             };
+        }
+
+        public static string GetMarkupTagsPath()
+        {
+            return @"C:\dev\test\markupTags.csv";
         }
     }
 }

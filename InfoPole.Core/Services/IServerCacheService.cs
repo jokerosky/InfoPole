@@ -8,6 +8,6 @@ namespace InfoPole.Core.Services
 {
     public interface IServerCacheService
     {
-         IEnumerable<T> GetList<T>() where T : class;
+         IList<T> GetList<T>() where T : class;
     }
 }

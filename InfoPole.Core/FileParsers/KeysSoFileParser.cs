@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using InfoPole.Core.Entities;
 using InfoPole.Core.Services;
 
 namespace InfoPole.Core.FileParsers

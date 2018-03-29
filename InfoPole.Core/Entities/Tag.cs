@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using InfoPole.Core.Entities.Interfaces;
 
-namespace InfoPole.Core
+namespace InfoPole.Core.Entities
 {
-    public class Tag
+    public class Tag : IIdentifiable
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Word { get; set; }
 
-        public int MarkupTagId { get; set; }
+        public long MarkupTagId { get; set; }
     }
 }

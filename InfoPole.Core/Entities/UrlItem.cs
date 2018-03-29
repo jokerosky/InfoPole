@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using InfoPole.Core.Entities.Interfaces;
 
-namespace InfoPole.Core
+namespace InfoPole.Core.Entities
 {
-    public class UrlItem
+    public class UrlItem : IIdentifiable
     {
         public long Id { get; set; }
         public string Url { get; set; }
