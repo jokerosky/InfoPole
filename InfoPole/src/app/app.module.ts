@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home.cmpnt';
@@ -19,12 +21,13 @@ import { MakrUpTagsComponent } from './components/markupTags';
     AppComponent,
     HomeComponent,
     FilesComponent,
-    MakrUpTagsComponent
+    MakrUpTagsComponent,
   ],
   imports: [
     BrowserAnimationsModule,
     MatInputModule,
     MatSelectModule,
+    MatSnackBarModule,
 
     FormsModule,
     HttpClientModule,

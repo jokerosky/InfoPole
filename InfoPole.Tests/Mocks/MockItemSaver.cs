@@ -20,6 +20,11 @@ namespace InfoPole.Tests.Mocks
             return _cache.Count;
         }
 
+        public int SaveChanges()
+        {
+            return 0;
+        }
+
         public T SaveItem<T>(T item) where T : class, IIdentifiable
         {
             if (!_cache.ContainsKey(typeof(T)))

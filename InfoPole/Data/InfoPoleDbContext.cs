@@ -11,7 +11,6 @@ namespace InfoPole.Data
 {
   public class InfoPoleDbContext : DbContext
   {
-    
 
     public DbSet<SearchKey> SearchKeys{ get; set; }
     public DbSet<SearchEngine> SearchEngines { get; set; }

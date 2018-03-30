@@ -20,7 +20,8 @@ namespace InfoPole.Tests
 
             var fpSvc = new FileProcessingService(
                 new MockServerCacheService(),
-                new MockItemSaver()
+                new MockItemSaver(),
+                new MarkupTagsFileParser()
                 );
 
             fpSvc.ProcessFile(path);
@@ -31,16 +32,18 @@ namespace InfoPole.Tests
         {
             var saver = new MockItemSaver();
             var cache = new MockServerCacheService();
+            var markupTagsParser = new MarkupTagsFileParser();
 
             var path = TestData.TessFilesPaths.GetMarkupTagsPath();
             var fpSvc = new FileProcessingService(
                 cache,
-                saver            
+                saver,
+                markupTagsParser
             );
 
             var result = fpSvc.ProcessMarkupTagsFile(path);
             
-            Assert.IsFalse(result > 0);
+            Assert.IsTrue(!result.Messages.Any());
             Assert.IsTrue(cache.GetListsCount() > 1);
             Assert.IsTrue(saver.GetListsCount() > 1);
         }

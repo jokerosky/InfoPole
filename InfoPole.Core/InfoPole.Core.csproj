@@ -54,6 +54,7 @@
     <Compile Include="FileParsers\KeysSoFileParser.cs" />
     <Compile Include="FileParsers\SpyWordsFileParser.cs" />
     <Compile Include="FileParsers\YandexContextParser.cs" />
+    <Compile Include="Models\OperationResult.cs" />
     <Compile Include="Services\IFileParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IItemsSaver.cs" />

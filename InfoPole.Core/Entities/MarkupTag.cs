@@ -8,7 +8,7 @@ namespace InfoPole.Core.Entities
         public long Id { get; set; }
         public string Name { get; set; }
 
-        public IEnumerable<Tag> Tags { get; set; }
+        //public IEnumerable<Tag> Tags { get; set; }
 
     }
 }

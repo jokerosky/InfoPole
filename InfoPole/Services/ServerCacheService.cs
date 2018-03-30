@@ -1,9 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using InfoPole.Core.Entities;
+using InfoPole.Core.Entities.DataBase;
+using InfoPole.Core.Entities.Interfaces;
+using InfoPole.Core.Models;
 using InfoPole.Core.Services;
 using InfoPole.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace InfoPole.Services
 {
@@ -11,16 +19,19 @@ namespace InfoPole.Services
     {
         private InfoPoleDbContext _ctx;
         private static Dictionary<Type, IEnumerable<object>> _listsCache;
+        //private static Dictionary<string, IEnumerable<object>> _listsCacheByTable;
 
         public ServerCacheService(InfoPoleDbContext ctx)
         {
             _ctx = ctx;
-            if(_listsCache == null) _listsCache = new Dictionary<Type, IEnumerable<object>>();
+            if (_listsCache == null) _listsCache = new Dictionary<Type, IEnumerable<object>>();
         }
 
-        public IList<T> GetList<T>() where T :  class
+        public IList<T> GetList<T>(bool isRefresh = false) where T : class
         {
-            if (_listsCache.ContainsKey(typeof(T)))
+            var tableName = _ctx.Model.FindEntityType(typeof(T)).Relational().TableName;
+
+            if (_listsCache.ContainsKey(typeof(T)) && !isRefresh)
             {
                 return _listsCache[typeof(T)] as IList<T>;
             }
@@ -32,22 +43,41 @@ namespace InfoPole.Services
             }
         }
 
-        //public int ReLoadLists()
-        //{
-        //    var types =_ctx.Model.GetEntityTypes();
-        //    var sets = _ctx.GetType().GetProperties()
-        //        .Where(p => p.PropertyType.Name.Contains("DbSet"))
-        //        .Select(p=>p.GetValue(_ctx))
-        //        .ToList();
+        public IList<T> GetList<T>() where T : class
+        {
+            return this.GetList<T>(false);
+        }
 
-        //    var list = (sets[0] as IEnumerable<object>).ToList();
+        public OperationResult ReloadLists()
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var count = 0;
 
-        //    foreach (var set in sets)
-        //    {
-        //        //_listsCache.Add( ,set);
-        //    }
+            this.GetList<SearchKey>(isRefresh: true);
+            this.GetList<SearchEngine>(isRefresh: true);
+            this.GetList<SearchKeyFrequency>(isRefresh: true);
+            this.GetList<MarkupTag>(isRefresh: true);
+            this.GetList<Tag>(isRefresh: true);
+            this.GetList<UrlItem>(isRefresh: true);
+            this.GetList<UrlKey>(isRefresh: true);
+            this.GetList<KeyTag>(isRefresh: true);
+            this.GetList<DataFile>(isRefresh: true);
 
-        //    return types.Count();
-        //}
+            //TODO ↓ add refresh with generics and relections
+            //var sets = _ctx.GetType().GetProperties().Where(x => x.PropertyType.ToString().Contains("DbSet"));
+            //foreach (var setProperty in sets)
+            //{
+            //    _listsCacheByTable[setProperty.Name] = setProperty.GetValue(_ctx);
+            //}
+
+            stopwatch.Stop();
+            return new OperationResult()
+            {
+                IsSuccess = true,
+                ElapsedTime = stopwatch.Elapsed,
+                Number = count    
+            };
+        }
     }
 }

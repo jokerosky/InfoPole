@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InfoPole.Core.Models;
 using InfoPole.Core.Services;
 
 namespace InfoPole.Tests.Mocks
@@ -33,6 +34,11 @@ namespace InfoPole.Tests.Mocks
                 _listsCache[typeof(T)] = list;
                 return list;
             }
+        }
+
+        public OperationResult ReloadLists()
+        {
+            return new OperationResult(){IsSuccess = true, Number = _listsCache.Count};
         }
     }
 }

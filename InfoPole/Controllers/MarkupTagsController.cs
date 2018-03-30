@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using InfoPole.Core.Entities;
+using InfoPole.Core.Models;
+using InfoPole.Core.Services;
+using InfoPole.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +16,26 @@ namespace InfoPole.Controllers
     [Route("MarkupTag")]
     public class MarkupTagsController : Controller
     {
+        private FileProcessingService _fpSvc;
+        private IServerCacheService _cache;
+
+
+        public MarkupTagsController(
+                FileProcessingService fileProcService,
+                IServerCacheService cache
+            )
+        {
+            this._fpSvc = fileProcService;
+            this._cache = cache;
+        }
+
         [HttpPost("file")]
         [DisableRequestSizeLimit]
         public async Task<IActionResult> File()
         {
             var files = Request.Form.Files;
-            var fnum = files.Count;
+            var result = new OperationResult();
+
             foreach (var file in files)
             {
                 var path = Path.GetTempPath() + file.FileName;
@@ -31,8 +49,7 @@ namespace InfoPole.Controllers
                     await file.CopyToAsync(fileStream);
                     fileStream.Close();
 
-
-
+                    result = this._fpSvc.ProcessMarkupTagsFile(path);
                 }
                 catch (Exception exp)
                 {
@@ -41,8 +58,22 @@ namespace InfoPole.Controllers
                 }
             }
 
-
-            return Ok(fnum);
+            return Ok(result);
         }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var markupTags = this._cache.GetList<MarkupTag>();
+            return Ok(markupTags);
+        }
+
+        [HttpGet("id")]
+        public IActionResult Get(long id)
+        {
+
+            return Ok();
+        }
+
     }
 }

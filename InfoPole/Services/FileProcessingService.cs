@@ -1,6 +1,7 @@
 using InfoPole.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using InfoPole.Core.Entities;
 using InfoPole.Core.Entities.DataBase;
 using InfoPole.Core.FileParsers;
+using InfoPole.Core.Models;
 using InfoPole.Core.Services;
 using InfoPole.Core.Utilities;
 
@@ -25,10 +27,12 @@ namespace InfoPole.Services
         private IList<Tag> _tags;
 
         private IItemsSaver _itemSaver;
+        private IMarkupTagsFileParser _markupTagsParser;
 
         public FileProcessingService(
         IServerCacheService serverCache,
-        IItemsSaver itemSaver
+        IItemsSaver itemSaver,
+        IMarkupTagsFileParser markupTagsParser
     )
         {
             _searchKeys = serverCache.GetList<SearchKey>(); //searchKeys;
@@ -39,35 +43,50 @@ namespace InfoPole.Services
             _tags = serverCache.GetList<Tag>();
 
             _itemSaver = itemSaver;
+            _markupTagsParser = markupTagsParser;
         }
 
-        public int ProcessMarkupTagsFile(string path)
+        public OperationResult ProcessMarkupTagsFile(string path)
         {
             var count = 0;
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             using (var reader = new StreamReader(path, win1251))
             {
-                var parser = new MarkupTagsFileParser();
                 var errors = new List<string>();
 
                 var headers = reader.ReadLine();
-                var parsedMarkupTags = parser.GetAndSaveMarkupTagsFromHeader(headers, _markupTags, _itemSaver);
+                var parsedMarkupTags = _markupTagsParser.GetAndSaveMarkupTagsFromHeader(headers, _markupTags, _itemSaver).ToArray();
+                _itemSaver.SaveChanges();
+                var content = new List<string>(1000);
 
-                while (!reader.EndOfStream)
+                while (!reader.EndOfStream) 
                 {
+                    content.Add(reader.ReadLine());
                     count++;
-                    var line = reader.ReadLine();
+                }
+                reader.Close();
 
+                foreach (string line in content)
+                {
                     try
                     {
-                        var tags = parser.GetAndSaveTagsFromLine(line, parsedMarkupTags, _tags, _itemSaver);
+                        var tags = _markupTagsParser.GetAndSaveTagsFromLine(line, parsedMarkupTags, _tags, _itemSaver);
                     }
                     catch (Exception exp)
                     {
                         errors.Add(exp.Message);
                     }
                 }
-
-                return count;
+                _itemSaver.SaveChanges();
+                stopwatch.Stop();
+                return new OperationResult()
+                {
+                    Number = count,
+                    Messages = errors,
+                    IsSuccess = true,
+                    ElapsedTime = stopwatch.Elapsed 
+                };
             }
         }
 

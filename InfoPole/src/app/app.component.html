@@ -6,6 +6,7 @@
   <nav>
     <a [routerLink]="['/files']">Files upload</a>
     <a [routerLink]="['/markuptags']">Markup tags</a>
+    <button class='btn btn-link' (click)="refreshServerCache()">Refresh server cache</button>
   </nav>
 
   <router-outlet></router-outlet>

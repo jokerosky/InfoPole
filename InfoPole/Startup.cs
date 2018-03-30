@@ -46,7 +46,9 @@ namespace InfoPole
 
 
             services.AddTransient<IServerCacheService, ServerCacheService>();
-
+            services.AddTransient<IItemsSaver, ItemsSaverService>();
+            services.AddTransient<IMarkupTagsFileParser, MarkupTagsFileParser>();
+            services.AddTransient<FileProcessingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

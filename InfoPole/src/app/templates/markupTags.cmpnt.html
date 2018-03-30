@@ -17,8 +17,8 @@
 
     <mat-form-field>
         <mat-select placeholder="Markup Tags">
-            <mat-option *ngFor="let tag of markupTags" [value]="tag">
-                {{ tag }}
+            <mat-option *ngFor="let tag of markupTags" [value]="tag.id">
+                {{ tag.name }}
             </mat-option>
         </mat-select>
     </mat-form-field>

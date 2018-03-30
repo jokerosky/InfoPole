@@ -34,21 +34,21 @@ namespace InfoPole.Services
         public IEnumerable<Tag> GetAndSaveTagsFromLine(string line, IEnumerable<MarkupTag> markupTags, IList<Tag> tags, IItemsSaver saver)
         {
             var values = line.Split(';');
-            var result = new List<Tag>();
+            var result =new List<Tag>();
+            markupTags = markupTags.ToArray();
 
             if (values.Length != markupTags.Count())
             {
                 throw new Exception("Number of values does not equal number of makup tags");
             }
 
-            markupTags = markupTags.ToArray();
             for (var i = 0; i < values.Length; i++)
             {
                 if(string.IsNullOrWhiteSpace(values[i].Trim())) continue;
 
                 var markupTagId = ((MarkupTag[]) markupTags)[i].Id;
-                var tag = tags.FirstOrDefault(t => t.Word.Equals(values[i], StringComparison.InvariantCultureIgnoreCase)
-                && t.MarkupTagId == markupTagId);
+                var tag = tags.FirstOrDefault(t => t.Word.Equals(values[i])
+                                                && t.MarkupTagId == markupTagId);
 
                 if (tag == null)
                 {

@@ -11,6 +11,8 @@ namespace InfoPole.Core.Services
 {
     public interface IItemsSaver
     {
+
+        int SaveChanges();
         T SaveItem<T>(T item) where T : class, IIdentifiable;
 
         SearchKey SaveKey(SearchKey key);

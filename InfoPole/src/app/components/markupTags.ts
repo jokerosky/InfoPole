@@ -1,22 +1,43 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import {Endpoints} from '../enums/Endpoints';
+import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'markup-tags',
     templateUrl: '../templates/markupTags.cmpnt.html',
 })
-export class MakrUpTagsComponent {
+export class MakrUpTagsComponent implements OnInit{
     baseUrl: string;
     file: File;
     markupTags: any[];
 
     constructor(
         private http: HttpClient,
-        @Inject('BASE_URL') baseUrl: string
+        @Inject('BASE_URL') baseUrl: string,
+        public snackBar: MatSnackBar
     ) {
         this.baseUrl = baseUrl;
         this.file = null;
         this.markupTags = ['a','b','c','d'];
+    }
+
+    ngOnInit(): void {
+        this.refreshMarkupTags();    
+    }
+
+    refreshMarkupTags(){
+        let url = Endpoints.api.markupTags.getList;
+        this.http.get(this.baseUrl + url)
+            .subscribe((resp:any)=>{
+                this.markupTags = resp;
+            },
+            (err)=>{
+                this.snackBar.open(err.message, "Close",{
+                    verticalPosition: 'top',
+                    panelClass:'bg-warning',
+                  });
+            })
     }
 
     filesChanged(event) {
@@ -41,7 +62,7 @@ export class MakrUpTagsComponent {
         this.http.post(
                 apiEndpoint,
                 formData
-            ).subscribe((resp:HttpResponse<any>)=>{
+            ).subscribe((resp:any)=>{
             debugger;
             let bytes = resp;
         },
