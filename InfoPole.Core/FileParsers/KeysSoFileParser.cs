@@ -30,7 +30,7 @@ namespace InfoPole.Core.FileParsers
             return result;
         }
 
-        public ParseItem ParseString(string line, int searcherId)
+        public ParseItem ParseString(string line, long searcherId)
         {
             var values = line.Split(';');
             

@@ -40,24 +40,29 @@ namespace InfoPole.Services
         public SearchKey SaveKey(SearchKey key)
         {
             var item = _ctx.SearchKeys.Add(key);
+            this.SaveChanges();
             return item.Entity;
+
         }
 
         public UrlItem SaveUrl(UrlItem url)
         {
             var item = _ctx.UrlItems.Add(url);
+            this.SaveChanges();
             return item.Entity;
         }
 
         public UrlKey SaveUrlKey(UrlKey urlKey)
         {
             var item = _ctx.UrlKeys.Add(urlKey);
+            this.SaveChanges();
             return item.Entity;
         }
 
         public SearchKeyFrequency SaveSearchKeyFrequency(SearchKeyFrequency keyFrequency)
         {
             var item = _ctx.SearchKeyFrequencies.Add(keyFrequency);
+            this.SaveChanges();
             return item.Entity;
         }
     }

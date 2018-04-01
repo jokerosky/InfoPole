@@ -1,4 +1,15 @@
-<div> Files</div>
+<p></p>
+
+<mat-form-field class="col">
+        <mat-select placeholder="Searcher" [(value)]="searcherId">
+          <mat-option value ="2">
+                Yandex
+          </mat-option>
+          <mat-option value = "1">
+                Google
+          </mat-option>
+        </mat-select>
+</mat-form-field>
 
 <form #filesForm="ngForm" (ngSubmit)="onSubmit()" >
     <div class="form-group">
@@ -11,6 +22,15 @@
         <li  class="list-group-item" *ngFor="let file of files">{{file.name}}</li>
     </ul>
     <p></p>
-    <button type="submit" class="btn btn-primary">Send Files</button>
-    <button type="reset" (click)="clearFiles()" class="btn btn-primary">Clear</button>
+    <button type="submit" [ngClass]="{'disabled': !files.length}" class="btn btn-primary">Send Files</button>
+    <button type="reset" (click)="clearFiles()" class="btn btn-secondary">Clear</button>
 </form>
+<p></p>
+<div>
+    <ul class='list-group'>
+        <li class='list-group-item' *ngFor="let file of dataFiles">
+            {{file.uploaded}} -- {{file.name}} -- {{file.searchEngineId}} -- {{file.recordsCount}} -- {{file.processingDuration}}
+        </li>
+        <li class='list-group-item'>No files loaded</li>
+    </ul>
+</div>

@@ -1,5 +1,5 @@
-<div>Markup tags</div>
-<h3>Select .csv with tags for markup </h3>
+
+<h3>Select *.csv with tags for markup </h3>
 <form #filesForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <div class="custom-file">
@@ -8,18 +8,29 @@
         </div>
     </div>
     <p></p>
-    <button type="submit" class="btn btn-primary">Upload</button>
-    <button type="reset" (click)="clearFiles()" class="btn btn-primary">Clear</button>
+    <button type="submit" [ngClass]="{'disabled': !file}" class="btn btn-primary">Upload</button>
+    <button type="reset" (click)="clearFiles()" class="btn btn-secondary">Clear</button>
 </form>
 <p></p>
 <div class="col">
-
-
     <mat-form-field>
-        <mat-select placeholder="Markup Tags">
-            <mat-option *ngFor="let tag of markupTags" [value]="tag.id">
+        <mat-select placeholder="Markup Tags" 
+        [(value)]="selectedMarkupTagId"
+        (selectionChange)="mtagChanged($event)">
+            <mat-option #selectedTagId *ngFor="let tag of markupTags" [value]="tag.id" >
                 {{ tag.name }}
             </mat-option>
         </mat-select>
     </mat-form-field>
+</div>
+
+<div *ngIf="true">
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let tag of tags" >
+            {{tag.word}}
+        </li>
+        <li class="list-group-item" *ngIf='!selectedMarkupTagId'>
+            No tags loaded
+        </li>
+    </ul>
 </div>

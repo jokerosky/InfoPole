@@ -6,5 +6,6 @@ namespace InfoPole.Core.Entities
     {
         public long Id { get; set; }
         public string Key { get; set; }
+        public int WordsNumber { get; set; }
     }
 }

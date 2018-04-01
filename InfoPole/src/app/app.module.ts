@@ -10,10 +10,13 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
+import { MarkUpTagServcie } from './services/markupTagService';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home.cmpnt';
 import { FilesComponent } from './components/files.cmpnt';
 import { MakrUpTagsComponent } from './components/markupTags';
+
 
 
 @NgModule({
@@ -41,7 +44,8 @@ import { MakrUpTagsComponent } from './components/markupTags';
   ])
   ],
   providers: [
-    { provide: 'BASE_URL', useFactory: getBaseUrl }
+    { provide: 'BASE_URL', useFactory: getBaseUrl },
+    MarkUpTagServcie,
   ],
   bootstrap: [AppComponent]
 })

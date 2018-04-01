@@ -33,16 +33,26 @@ namespace InfoPole.Core.FileParsers
             return result;
         }
 
-        public ParseItem ParseString(string line, int searcherId)
+        public ParseItem ParseString(string line, long searcherId)
         {
-            var values = line.Split(';');
+            var values = line.Split(new[] { "\";" }, StringSplitOptions.None);
+
+            if (values.Length > 8)
+            {
+                values[6] = values[7];
+            }
+
+            
+
+            int.TryParse(values[3].Replace(" ", "").Replace("\"", ""), out var position);
+            int.TryParse(values[2].Replace(" ", "").Replace("\"", ""), out var  showings);
 
             var keyItem = new ParseItem()
             {
-                Key = values[1],
-                Url = values[2],
-                Position = int.Parse(values[3].Replace(" ", "")),
-                ShowingsNumber = int.Parse(values[5].Replace(" ", "")),
+                Key = values[0].Replace("\"", ""),
+                Url = values[6].Replace("\"", ""),
+                Position = position,
+                ShowingsNumber = showings,
                 SearchEngineId = searcherId
             };
 

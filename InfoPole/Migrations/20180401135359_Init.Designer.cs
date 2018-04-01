@@ -11,9 +11,10 @@ using System;
 namespace InfoPole.Migrations
 {
     [DbContext(typeof(InfoPoleDbContext))]
-    partial class InfoPoleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180401135359_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,13 +62,13 @@ namespace InfoPole.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<TimeSpan?>("ProcessingDuration");
+                    b.Property<TimeSpan>("ProcessingDuration");
 
-                    b.Property<long>("RecordsCount");
+                    b.Property<int>("RecordsCount");
 
                     b.Property<long>("SearchEngineId");
 
-                    b.Property<DateTime?>("Uploaded");
+                    b.Property<DateTime>("Uploaded");
 
                     b.HasKey("Id");
 

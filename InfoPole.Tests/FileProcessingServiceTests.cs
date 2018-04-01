@@ -15,16 +15,27 @@ namespace InfoPole.Tests
         [Test]
         public void Should_process_csv_file()
         {
-            var path = @"C:\dev\test\rivegauche.ru_G_spyw.csv";
+            var path = @"C:\dev\test\rivegauche.ru_Y_spyw.csv";
             //var path = @"C:\dev\test\rivegauche.ru.organic_Y.keys.csv";
 
+            var saver = new MockItemSaver();
+            var cache = new MockServerCacheService();
+
             var fpSvc = new FileProcessingService(
-                new MockServerCacheService(),
-                new MockItemSaver(),
-                new MarkupTagsFileParser()
+                cache,
+                saver
                 );
 
-            fpSvc.ProcessFile(path);
+            var result = fpSvc.ProcessFile(path, 1);
+
+            Assert.IsTrue(!result.Messages.Any());
+            
+            var keysCount = cache.GetList<SearchKey>().Count;
+            var urlsCount = cache.GetList<UrlItem>().Count;
+            Assert.IsTrue(keysCount > 1);
+            Assert.IsTrue(urlsCount > 1);
+            Assert.IsTrue(urlsCount != keysCount);
+            Assert.IsTrue(saver.GetListsCount() > 1);
         }
 
         [Test]
@@ -37,11 +48,10 @@ namespace InfoPole.Tests
             var path = TestData.TessFilesPaths.GetMarkupTagsPath();
             var fpSvc = new FileProcessingService(
                 cache,
-                saver,
-                markupTagsParser
+                saver
             );
 
-            var result = fpSvc.ProcessMarkupTagsFile(path);
+            var result = fpSvc.ProcessMarkupTagsFile(path, markupTagsParser);
             
             Assert.IsTrue(!result.Messages.Any());
             Assert.IsTrue(cache.GetListsCount() > 1);

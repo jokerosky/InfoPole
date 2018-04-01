@@ -25,7 +25,7 @@ namespace InfoPole.Tests
                 TestData.FileHeaders.GetMarkupTagsHeader(),
                 mTList,
                 saver
-             );
+             ).ToList();
 
             Assert.IsTrue(mTags.Any());
             Assert.IsTrue(mTList.Count == mTags.Count());
@@ -38,7 +38,7 @@ namespace InfoPole.Tests
                     line,
                     mTags,
                     tList,
-                    saver);
+                    saver).ToList();
 
                 Assert.IsTrue(tags.Any());
                 Assert.IsTrue(tList.Count / cycle == tags.Count());

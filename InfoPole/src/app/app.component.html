@@ -1,12 +1,19 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class='container-fluid'>
-  <h1>
-    Infopole Test
-  </h1>
-  <nav>
-    <a [routerLink]="['/files']">Files upload</a>
-    <a [routerLink]="['/markuptags']">Markup tags</a>
-    <button class='btn btn-link' (click)="refreshServerCache()">Refresh server cache</button>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" [routerLink]="['/']" >InfoPole</a>
+  </nav>
+  <p></p>
+  <nav class="nav nav-tabs nav-fill  ">
+      <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/files']" routerLinkActive="active">Files upload</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/markuptags']" routerLinkActive="active">Markup tags</a>
+  </li>
+    <li class="nav-item">
+    <button class='btn btn-link' (click)="refreshServerCache()" >Refresh server cache</button>
+  </li>
   </nav>
 
   <router-outlet></router-outlet>

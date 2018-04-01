@@ -1,73 +1,94 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import {Endpoints} from '../enums/Endpoints';
+import { Endpoints } from '../enums/Endpoints';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MarkupTag } from '../models/entities/MarkUpTag';
+import { MarkUpTagServcie } from '../services/markupTagService';
+import { Tag } from '../models/entities/Tag';
 
 @Component({
     selector: 'markup-tags',
     templateUrl: '../templates/markupTags.cmpnt.html',
 })
-export class MakrUpTagsComponent implements OnInit{
-    baseUrl: string;
+export class MakrUpTagsComponent implements OnInit {
     file: File;
-    markupTags: any[];
+    markupTags: MarkupTag[];
+    tags: Tag[];
+
+    selectedMarkupTagId: number;
+
 
     constructor(
-        private http: HttpClient,
-        @Inject('BASE_URL') baseUrl: string,
+        private mtagSvc: MarkUpTagServcie,
         public snackBar: MatSnackBar
     ) {
-        this.baseUrl = baseUrl;
         this.file = null;
-        this.markupTags = ['a','b','c','d'];
+        this.markupTags = [];
+        this.tags = [];
     }
 
     ngOnInit(): void {
-        this.refreshMarkupTags();    
+        this.refreshMarkupTags();
     }
 
-    refreshMarkupTags(){
+    refreshMarkupTags() {
         let url = Endpoints.api.markupTags.getList;
-        this.http.get(this.baseUrl + url)
-            .subscribe((resp:any)=>{
+        this.mtagSvc.getMarkupTags()
+            .subscribe((resp: MarkupTag[]) => {
                 this.markupTags = resp;
             },
-            (err)=>{
-                this.snackBar.open(err.message, "Close",{
-                    verticalPosition: 'top',
-                    panelClass:'bg-warning',
-                  });
-            })
+                (err) => {
+                    this.snackBar.open(err.message, "Close", {
+                        verticalPosition: 'top',
+                        panelClass: ['bg-danger', 'text-white'],
+                    });
+                })
     }
 
     filesChanged(event) {
         this.file = event.target.files[0];
     }
 
-    clearFiles(){
+    clearFiles() {
         this.file = null;
     }
 
-    onSubmit(){
-        if(!this.file){
+    mtagChanged(e) {
+        this.mtagSvc.getTagsForMarkupTag(e.value)
+            .subscribe(
+                (tags:Tag[]) => {
+                    this.tags = tags;
+            },
+                (err) => { 
+                    this.snackBar.open(err.message, "Close", {
+                        verticalPosition: 'top',
+                        panelClass: ['bg-danger', 'text-white'],
+                    });
+                })
+    }
+
+    onSubmit() {
+        if (!this.file) {
             return false;
         }
-        debugger;
-        let apiEndpoint = `${this.baseUrl}MarkupTag/File`;
 
         const formData: FormData = new FormData();
         formData.append('fileItem', this.file, this.file.name);
-        
-        
-        this.http.post(
-                apiEndpoint,
-                formData
-            ).subscribe((resp:any)=>{
-            debugger;
-            let bytes = resp;
-        },
-        (err)=>{
-            debugger;
-        });
+
+        this.mtagSvc.uploadMarkupTagsFile(formData)
+            .subscribe((resp: any) => {
+                this.snackBar.open('File uploaded', ':)', {
+                    verticalPosition: 'top',
+                    duration: 3000
+                });
+
+                this.refreshMarkupTags();
+            },
+                (err) => {
+                    this.snackBar.open(err.message, ':)', {
+                        verticalPosition: 'top',
+                        panelClass: ['bg-danger', 'text-white']
+                    });
+                });
     }
 }

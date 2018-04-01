@@ -16,6 +16,8 @@ namespace InfoPole.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    ProcessingDuration = table.Column<TimeSpan>(nullable: false),
+                    RecordsCount = table.Column<int>(nullable: false),
                     SearchEngineId = table.Column<long>(nullable: false),
                     Uploaded = table.Column<DateTime>(nullable: false)
                 },
@@ -86,7 +88,8 @@ namespace InfoPole.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Key = table.Column<string>(nullable: true)
+                    Key = table.Column<string>(nullable: true),
+                    WordsNumber = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,6 +131,9 @@ namespace InfoPole.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     KeyId = table.Column<long>(nullable: false),
+                    Position = table.Column<int>(nullable: false),
+                    SearcherId = table.Column<long>(nullable: false),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     UrlId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>

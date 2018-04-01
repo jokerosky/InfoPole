@@ -18,15 +18,17 @@ namespace InfoPole.Controllers
     {
         private FileProcessingService _fpSvc;
         private IServerCacheService _cache;
-
+        private IMarkupTagsFileParser _markupTagsParser;
 
         public MarkupTagsController(
                 FileProcessingService fileProcService,
-                IServerCacheService cache
+                IServerCacheService cache,
+                IMarkupTagsFileParser markupTagsFileParser
             )
         {
             this._fpSvc = fileProcService;
             this._cache = cache;
+            this._markupTagsParser = markupTagsFileParser;
         }
 
         [HttpPost("file")]
@@ -49,7 +51,7 @@ namespace InfoPole.Controllers
                     await file.CopyToAsync(fileStream);
                     fileStream.Close();
 
-                    result = this._fpSvc.ProcessMarkupTagsFile(path);
+                    result = this._fpSvc.ProcessMarkupTagsFile(path, this._markupTagsParser);
                 }
                 catch (Exception exp)
                 {

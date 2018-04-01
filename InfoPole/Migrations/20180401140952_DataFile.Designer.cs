@@ -11,8 +11,8 @@ using System;
 namespace InfoPole.Migrations
 {
     [DbContext(typeof(InfoPoleDbContext))]
-    [Migration("20180330114157_Init")]
-    partial class Init
+    [Migration("20180401140952_DataFile")]
+    partial class DataFile
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,12 @@ namespace InfoPole.Migrations
 
                     b.Property<long>("KeyId");
 
+                    b.Property<int>("Position");
+
+                    b.Property<long>("SearcherId");
+
+                    b.Property<DateTime>("TimeStamp");
+
                     b.Property<long>("UrlId");
 
                     b.HasKey("Id");
@@ -56,9 +62,13 @@ namespace InfoPole.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<TimeSpan?>("ProcessingDuration");
+
+                    b.Property<long>("RecordsCount");
+
                     b.Property<long>("SearchEngineId");
 
-                    b.Property<DateTime>("Uploaded");
+                    b.Property<DateTime?>("Uploaded");
 
                     b.HasKey("Id");
 
@@ -95,6 +105,8 @@ namespace InfoPole.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Key");
+
+                    b.Property<int>("WordsNumber");
 
                     b.HasKey("Id");
 

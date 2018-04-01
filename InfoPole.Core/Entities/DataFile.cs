@@ -7,7 +7,10 @@ namespace InfoPole.Core.Entities
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public DateTime Uploaded { get; set; }
+        public DateTime? Uploaded { get; set; }
         public long SearchEngineId { get; set; }
+
+        public TimeSpan? ProcessingDuration { get; set; }
+        public long RecordsCount { get; set; }
     }
 }

@@ -1,20 +1,42 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { DataFile } from '../models/entities/dataFile';
+import { Endpoints } from '../enums/Endpoints';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'files',
     templateUrl: '../templates/files.cmpnt.html',
 })
-export class FilesComponent {
+export class FilesComponent implements OnInit  {
     files: File[];
     baseUrl: string;
+    dataFiles: DataFile[];
+    searcherId: number;
 
     constructor(
         private http: HttpClient,
-        @Inject('BASE_URL') baseUrl: string
+        public snackBar: MatSnackBar
     ) {
-        this.baseUrl = baseUrl;
         this.files = [];
+    }
+
+    ngOnInit(): void {
+        this.refreshLoadedFiles();
+    }
+
+    refreshLoadedFiles()
+    {
+        var endpoint = Endpoints.baseUrl + Endpoints.api.dataFiles.get;
+        this.http.get(endpoint)
+            .subscribe(
+                (files:DataFile[])=>{
+                    this.dataFiles = files;
+                },
+                (err)=>{
+
+                }
+            )
     }
 
     filesChanged(event) {
@@ -29,8 +51,8 @@ export class FilesComponent {
         if(this.files.length < 1){
             return false;
         }
-        debugger;
-        let apiEndpoint = `${this.baseUrl}files/`;
+        
+        let apiEndpoint = Endpoints.baseUrl + `files?searcherId=${this.searcherId}`;
 
         const formData: FormData = new FormData();
 
@@ -42,13 +64,15 @@ export class FilesComponent {
         this.http.post(
                 apiEndpoint,
                 formData
-            ).subscribe((resp:HttpResponse<any>)=>{
-            debugger;
-            let bytes = resp;
-
+            ).subscribe((resp:DataFile[])=>{
+                this.dataFiles = resp;
         },
         (err)=>{
             debugger;
+            this.snackBar.open(err.error, "Close", {
+                verticalPosition: 'top',
+                panelClass: ['bg-danger', 'text-white'],
+            });
         });
     }
 }

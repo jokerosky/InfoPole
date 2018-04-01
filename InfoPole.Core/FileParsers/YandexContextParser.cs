@@ -15,7 +15,7 @@ namespace InfoPole.Core.FileParsers
             throw new NotImplementedException();
         }
 
-        public ParseItem ParseString(string line, int searcherId)
+        public ParseItem ParseString(string line, long searcherId)
         {
             throw new NotImplementedException();
         }

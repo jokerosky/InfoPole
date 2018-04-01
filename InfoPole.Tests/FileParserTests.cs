@@ -42,10 +42,13 @@ namespace InfoPole.Tests
         public void SpyWordsParser_should_parse_data_line()
         {
             var spyWordsParser = new SpyWordsFileParser();
-            var line = TestData.FileDataLines.GetSpyWordsDataLine();
-            var keyItem = spyWordsParser.ParseString(line, 0);
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(keyItem.Key));
+            var lines = TestData.FileDataLines.GetSpyWordsDataLines();
+            foreach (var line in lines)
+            {
+                var keyItem = spyWordsParser.ParseString(line, 0);
+                Assert.IsFalse(string.IsNullOrWhiteSpace(keyItem.Key));
+            }
         }
     }
 }
